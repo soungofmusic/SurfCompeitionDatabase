@@ -1,0 +1,444 @@
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Adapted from:
+  We used the website to see what is customizable for CSS and to remind us of the syntax.
+  Source URL: https://www.w3schools.com/cssref/index.php
+*/
+
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f8ff;
+  color: #333;
+  /*
+  Citation for the following code:
+  Date: 6/05/2024
+  Copy from:
+  Used the code to insert the picture as a background. 
+  Source URL: https://www.w3schools.com/css/css3_images.asp
+  */
+  background-image: url('/static/wave.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  color: #0077be;
+  text-align: center;
+  font-size: 40px;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+  color: #005f8b;
+  font-size: 35px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-left: 15px;
+}
+
+h3 {
+  color: #01168f;
+  font-size: 30px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  margin-left: 15px;
+}
+
+h4 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  margin-left: 15px;
+}
+
+section {
+  background-color: #fff; 
+  padding: 1px; 
+}
+
+section {
+  margin: 20px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 22px; 
+}
+
+section h2 {
+  font-size: 36px; 
+  margin-bottom: 10px;
+}
+
+section ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+section li {
+  margin-bottom: 20px;
+}
+
+section a {
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+  font-size: 26px; 
+}
+
+section a:hover {
+  color: #666;
+}
+
+section p {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-size: 20px; 
+  color: #666;
+}
+
+footer {
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+footer p {
+  margin: 0;
+  font-size: 25px;
+}
+
+/* Navigation */
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Adapted from:
+  Used the code for formatting and seeing what is possible for the navigation bar.
+  Source URL: https://www.w3schools.com/css/css_navbar.asp
+  */
+
+nav {
+  background-color: #0077be;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  position: relative;
+}
+
+.nav-link {
+  display: block;
+  color: #fff;
+  text-decoration: none;
+  font-size: 25px;
+  padding: 15px 20px;
+  transition: background-color 0.3s ease;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav-link:hover {
+  background-color: #005f8b;
+}
+
+.nav-link.active {
+  background-color: #005f8b;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 3px;
+  background-color: #fff;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* Table styles */
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Copy and Adapted from:
+  Copy the code for striped tables and adapt the hover to highlight table rows
+  Source URL: https://www.w3schools.com/css/css_table_style.asp
+*/
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+table th,
+table td {
+  padding: 15px;
+  text-align: left;
+  font-size: 20px;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+table th {
+  background-color: #0077be;
+  color: #fff;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table tr:hover {
+  background-color: #e0f0ff;
+  transition: background-color 0.3s ease;
+}
+
+/* Form styles */
+
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Adapted from:
+  Copied the format but changed around the numbers for padding and widths.
+  Source URL: https://www.w3schools.com/css/css_form.asp
+*/
+
+form {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #0077be;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+form input[type="text"],
+form input[type="number"],
+form select {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  font-size: 18px;
+  transition: border-color 0.3s ease;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+  border-color: #0077be;
+  outline: none;
+}
+
+form input[type="submit"] {
+  background-color: #0077be;
+  color: #fff;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+  background-color: #005f8b;
+}
+
+/* Button styles */
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Adapted from:
+  Combine all the code or mix and match the code to produce various button styles.
+  Source URL: https://www.w3schools.com/css/css3_buttons.asp
+*/
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-right: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #0077be;
+  color: #fff;
+  margin-left: 15px;
+}
+
+.btn-primary:hover {
+  background-color: #005f8b;
+}
+
+.btn-cancel {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  background-color: #ccc;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Edit button styles */
+.btn-edit {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-edit:hover {
+  background-color: #b3e3be;
+}
+
+/* Delete button styles */
+.btn-delete {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.btn-delete:hover {
+  color: #000000;
+  background-color: #f79fa7;
+}
+
+/* Responsive styles */
+/*
+  Citation for the following code:
+  Date: 6/05/2024
+  Adapted from:
+  Used the example at the bottom of the page as a guide for my guide. 
+  Source URL: https://www.w3schools.com/html/html_responsive.asp
+*/
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  nav ul li a {
+    font-size: 16px;
+    padding: 12px 16px;
+  }
+
+  table {
+    font-size: 14px;
+  }
+
+  form label {
+    font-size: 18px;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form select {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  form input[type="submit"],
+  .button {
+    font-size: 18px;
+    padding: 12px 20px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  nav ul {
+    flex-direction: column;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  form label {
+    font-size: 16px;
+  }
+
+  form input[type="text"],
+  form input[type="number"],
+  form select {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  form input[type="submit"],
+  .button {
+    font-size: 16px;
+    padding: 10px 18px;
+  }
+}
