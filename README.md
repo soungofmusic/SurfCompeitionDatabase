@@ -1,8 +1,8 @@
-# CS340-Surf-Project
+# Database-Surf-Project
 
 # Wave of the Day
 
-Wave of the Day is a web application that provides a user-friendly interface for managing surf competitions, surfers, rounds, heats, scores, and results, utilizing a database to organize and track various aspects of surf competitions.
+Wave of the Day is a web application that provides a user-friendly interface for managing surf competitions, surfers, rounds, heats, scores, and results, utilizing a database to organize and track various aspects of a fictional surf competitions.
 
 ## Citations
 This project incorporates code and ideas from the following sources:
