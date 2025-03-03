@@ -1,0 +1,118 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Adapted from 
+Adapted the UI and structure from the starter code
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/people.j2
+#}
+<html>
+<!-- Adapted from the people.j2 UI design -->
+  <head>
+    <title>Rounds</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script language="JavaScript">
+      function showform(dowhat) {
+        if (dowhat == 'insert') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'block';
+        } else { //by default display browse
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'none';
+        }
+      }
+
+      function newRound() {
+        showform('insert');
+      }
+
+      function browseRounds() {
+        showform('browse');
+      }
+    </script>
+  </head>
+
+  <body onload="browseRounds()">
+    <h1>Rounds</h1>
+    <nav>
+  <ul>
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="surfers" class="nav-link">Surfers</a></li>
+    <li><a href="/competitions" class="nav-link">Competitions</a></li>
+    <li><a href="/rounds" class="nav-link active">Rounds</a></li>
+    <li><a href="/heats" class="nav-link">Heats</a></li>
+    <li><a href="/heat-scores" class="nav-link">Heat Scores</a></li>
+    <li><a href="/results" class="nav-link">Results</a></li>
+  </ul>
+</nav>
+
+    <h4>The Rounds page provides an overview of all the rounds registered in the database. It offers a user-friendly interface to manage round information efficiently. The page supports full CRUD (Create, Read, Update, Delete) functionality, allowing users to add new rounds, view existing round details, update round information, and remove rounds from the database when necessary. The Rounds page serves as a central hub for managing round data, enabling easy maintenance and ensuring data integrity within the application.</h4>
+
+    <!-- Enables browse function above and hides other forms -->
+    <div id="browse">
+
+      <!-- Adds New Round Button-->
+      <p><a href="#" class="btn btn-primary" onClick="newRound()">Add New Round</a></p>
+
+      <!-- Builds table with all rounds-->
+      <table border="1" cellpadding="5">
+        <!-- Access data tuple passed from app.py -->
+        {% if data %}
+          <thead>
+            <tr>
+              <th>Round ID</th>
+              <th>Competition Name</th>
+              <th>Round Type</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- Iterates through each item in data -->
+            {% for item in data %}
+              <tr>
+                <!-- Iterates through every key in the current item dictionary -->
+                {% for key in item.keys() %}
+                  <!-- Create a <td> element with the value of that key in it -->
+                  <td>{{item[key]}}</td>
+                {% endfor %}
+
+                <!-- Create edit/delete buttons -->
+                <td><a href="/edit_rounds/{{item.round_id}}" class="btn btn-edit">Edit</a></td>
+                <td><a href="/delete_round/{{item.round_id}}" class="btn btn-delete">Delete</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        {% endif %}
+      </table>
+      <p>&nbsp;</p>
+    </div>
+
+    <div id="insert">
+      <!-- form to INSERT new data into rounds-->
+      <form id="insertRound" action="/rounds" method="post">
+        <legend><strong>Add Round</strong></legend>
+        <fieldset>
+          <label for="competition_id">Competition:</label>
+          <select class="form-control" id="competition_id" name="competition_id" pattern="[0-9]+" placeholder="" required>
+               <option value=""disabled selected hidden>Select Competition...</option>
+              {% for competition in competitions %}
+                <option value="{{competition['competition_id']}}">{{competition['competition_name']}}</option>
+              {% endfor %}
+          </select>
+
+          <label for="round_type">Round Type:</label>
+          <select class="form-control" id="round_type" name="round_type" required>
+            <option value=""disabled selected hidden>Select Round Type</option>
+            <option value="Knockout">Knockout</option>
+            <option value="Quarter-Final">Quarter-Final</option>
+            <option value="Semi-Final">Semi-Final</option>
+            <option value="Final">Final</option>
+          </select>
+        </fieldset>
+
+        <!-- Create 'Add Round' and 'Cancel' buttons -->
+        <input type="submit" value="Add Round" name="Add_Round" class="btn btn-primary" style="margin:.5rem;">
+        <input class="btn" type="button" value="Cancel" onClick="browseRounds()">
+      </form>
+    </div>
+  </body>
+</html>

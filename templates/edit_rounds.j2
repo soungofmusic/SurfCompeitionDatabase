@@ -1,0 +1,96 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Based on:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/edit_people.j2
+Used the started code and adapted it based on our project
+#}
+
+<html>
+<!-- Adapted from the edit_people.html UI design -->
+<head>
+    <h1>Edit Rounds</h1>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div>
+        <table border="1" cellpadding="5">
+            <caption>Editing Round:</caption>
+            <!-- Access data tuple passed from app.py -->
+            {% if data %}
+            <thead>
+                <tr>
+                    <th>Round ID</th>
+                    <th>Competition</th>
+                    <th>Round Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iterates through the items in data -->
+                {% for item in data %}
+                <tr>
+                    <!-- Iterates through every key in the current item dictionary -->
+                    {% for key in item.keys() %}
+                    <!-- Creates a table data from each item's key -->
+                    <td>{{item[key]}}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+            {% endif %}
+        </table>
+        <div id="edit">
+            <!-- form to edit data in Rounds -->
+            <form id="editRound" action="/edit_rounds/{{data[0].round_id}}" method="post">
+                <legend><strong>Edit Round</strong></legend>
+                <fieldset>
+                    <!-- Creates hidden form input to store the passed 'round_id' to be used in POST request to update the specific row tied to this round from app.py -->
+                    <input type="hidden" value="{{data[0].round_id}}" class="form-control" id="round_id" name="round_id" required>
+                    
+                    <label for="model">Competition:</label>
+                    <select class="form-control" id="competition_id" name="competition_id" required>
+                        {% for competition in competitions %}
+                            {% if data[0].competition_name == competition['competition_name'] %}
+                                <option value="{{competition['competition_id']}}" selected>{{competition['competition_name']}}</option>
+                            {% else %}
+                                <option value="{{competition['competition_id']}}">{{competition['competition_name']}}</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+
+                    <label for="round_type">Round Type:</label>
+                    <select class="form-control" id="result_type" name="round_type" required>
+
+                    {% if data[0].round_type == "Knockout"%}    
+                        <option value="Knockout" selected>Knockout</option>
+                        <option value="Quarter-Final">Quarter-Final</option>
+                        <option value="Semi-Final">Semi-Final</option>
+                        <option value="Final">Final</option>
+                    {%elif data[0].round_type == "Quarter-Final"%}
+                        <option value="Knockout">Knockout</option>
+                        <option value="Quarter-Final" selected>Quarter-Final</option>
+                        <option value="Semi-Final">Semi-Final</option>
+                        <option value="Final">Final</option>
+                    {%elif data[0].round_type == "Semi-Final"%}
+                        <option value="Knockout">Knockout</option>
+                        <option value="Quarter-Final">Quarter-Final</option>
+                        <option value="Semi-Final" selected>Semi-Final</option>
+                        <option value="Final">Final</option>
+                    {% else %}
+                        <option value="Knockout">Knockout</option>
+                        <option value="Quarter-Final">Quarter-Final</option>
+                        <option value="Semi-Final">Semi-Final</option>
+                        <option value="Final" selected>Final</option>
+                    {%endif%}
+                    
+                    </select>
+                </fieldset>
+                <!-- Submits POST request to app.py -->
+                <input type="submit" value="Save" name="Edit_Round" class="btn btn-primary" style="margin:.5rem;">
+                <!-- If update to round is cancelled, signals to reroute to rounds page -->
+                <a href='/rounds'><input class="btn" type="button" value="Cancel"></a>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

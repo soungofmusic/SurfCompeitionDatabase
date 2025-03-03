@@ -1,0 +1,112 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Adapted from 
+Adapted the UI and structure from the starter code
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/people.j2
+#}
+<html>
+<!-- Adapted from the people.j2 UI design -->
+  <head>
+    <title>Heats</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script language="JavaScript">
+      function showform(dowhat) {
+        if (dowhat == 'insert') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'block';
+        } else { //by default display browse
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'none';
+        }
+      }
+
+      function newHeat() {
+        showform('insert');
+      }
+
+      function browseHeats() {
+        showform('browse');
+      }
+    </script>
+  </head>
+
+  <body onload="browseHeats()">
+    <h1>Heats</h1>
+  <nav>
+  <ul>
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="surfers" class="nav-link">Surfers</a></li>
+    <li><a href="/competitions" class="nav-link">Competitions</a></li>
+    <li><a href="/rounds" class="nav-link">Rounds</a></li>
+    <li><a href="/heats" class="nav-link active">Heats</a></li>
+    <li><a href="/heat-scores" class="nav-link">Heat Scores</a></li>
+    <li><a href="/results" class="nav-link">Results</a></li>
+  </ul>
+</nav>
+
+    <h4>The Heats page provides an overview of all the heats registered in the database. It offers a user-friendly interface to manage heat information efficiently. The page supports full CRUD (Create, Read, Update, Delete) functionality, allowing users to add new heats, view existing heat details, update heat information, and remove heats from the database when necessary. The Heats page serves as a central hub for managing heat data, enabling easy maintenance and ensuring data integrity within the application.</h4>
+
+    <!-- Enables browse function above and hides other forms -->
+    <div id="browse">
+
+      <!-- Adds New Heat Button-->
+      <p><a href="#" class="btn btn-primary" onClick="newHeat()">Add New Heat</a></p>
+
+      <!-- Builds table with all heats-->
+      <table border="1" cellpadding="5">
+        <!-- Access data tuple passed from app.py -->
+        {% if data %}
+          <thead>
+            <tr>
+              <th>Heat ID</th>
+              <th>Competition</th>
+              <th>Round</th>
+              <th>Heat Number</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <!-- Iterates through each item in data -->
+            {% for item in data %}
+              <tr>
+                <!-- Iterates through every key in the current item dictionary -->
+                {% for key in item.keys() %}
+                  <!-- Create a <td> element with the value of that key in it -->
+                  <td>{{item[key]}}</td>
+                {% endfor %}
+
+                <!-- Create edit/delete buttons -->
+                <td><a href="/edit_heats/{{item.heat_id}}" class="btn btn-edit">Edit</a></td>
+                <td><a href="/delete_heat/{{item.heat_id}}" class="btn btn-delete">Delete</a></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        {% endif %}
+      </table>
+      <p>&nbsp;</p>
+    </div>
+
+    <div id="insert">
+      <!-- form to INSERT new data into heats-->
+      <form id="insertHeat" action="/heats" method="post">
+        <legend><strong>Add Heat</strong></legend>
+        <fieldset>
+          <label for="year">Round:</label>
+          <select class="form-control" id="round_id" name="round_id" required>
+            {% for round in rounds %}
+                <option value="{{round['round_id']}}">{{round['competition_name']}} - {{round['round_type']}}</option>
+            {% endfor %}
+          </select>
+
+          <label for="heat_number">Heat Number:</label>
+          <input type="text" class="form-control" id="heat_number" name="heat_number" pattern="[0-9]+" placeholder="" required>
+        </fieldset>
+
+        <!-- Create 'Add Heat' and 'Cancel' buttons -->
+        <input type="submit" value="Add Heat" name="Add_Heat" class="btn btn-primary" style="margin:.5rem;">
+        <input class="btn" type="button" value="Cancel" onClick="browseHeats()">
+      </form>
+    </div>
+  </body>
+</html>

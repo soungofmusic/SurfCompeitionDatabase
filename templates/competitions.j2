@@ -1,0 +1,157 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Adapted from 
+Adapted the UI and structure from the starter code
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/people.j2
+#}
+
+<html>
+
+<!-- Adapted from the people.html UI design -->
+  <head>
+    <title>Competitions</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script language="JavaScript">
+      function showform(dowhat) {
+        /*
+        * Divs will allow for hiding forms depending on what action is taken by the user when used with functions below
+        */
+        if (dowhat == 'insert') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'block';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'none';
+        } else if (dowhat == 'edit') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'block';
+          document.getElementById('delete').style.display = 'none';
+        } else if (dowhat == 'delete') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'block';
+        } else if (dowhat == 'all') {
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'block';
+          document.getElementById('edit').style.display = 'block';
+          document.getElementById('delete').style.display = 'block';
+        } else { //by default display browse
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'none';
+        }
+      }
+
+      function newCompetition() {
+        showform('insert');
+      }
+
+      function editCompetition(competition_id) {
+        showform('edit');
+      }
+
+      function deleteCompetition(competition_id) {
+        showform('delete');
+      }
+
+      function browseCompetitions() {
+        showform('browse');
+      }
+
+      function showAll() {
+        showform('all');
+      }
+    </script>
+  </head>
+
+  <body onload="browseCompetitions()">
+ <h1>Competitions</h1> 
+    <nav>
+  <ul>
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="surfers" class="nav-link">Surfers</a></li>
+    <li><a href="/competitions" class="nav-link active">Competitions</a></li>
+    <li><a href="/rounds" class="nav-link">Rounds</a></li>
+    <li><a href="/heats" class="nav-link">Heats</a></li>
+    <li><a href="/heat-scores" class="nav-link">Heat Scores</a></li>
+    <li><a href="/results" class="nav-link">Results</a></li>
+  </ul>
+</nav>
+
+    <h4>The Competitions page provides an overview of all the competitions registered in the database. It offers a user-friendly interface to manage competition information efficiently. The page supports full CRUD (Create, Read, Update, Delete) functionality, allowing users to add new competitions, view existing competition details, update competition information, and remove competitions from the database when necessary. The Competitions page serves as a central hub for managing competition data, enabling easy maintenance and ensuring data integrity within the application.</h4>
+
+
+    <!-- Enables browse function above and hides other forms -->
+    <div id="browse">
+
+      <!-- Adds New Competition Button-->
+      <p><a href="#" class="btn btn-primary" onClick="newCompetition()">Add New Competition</a></p>
+
+      <!-- Builds table with all competitions-->
+      <table border="1" cellpadding="5">
+
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+          
+          <thead>
+            <tr>
+              <th>Competition ID</th>
+              <th>Competition Name</th>
+              <th>Competition Location</th>
+              <th>Completion Date</th>
+            </tr>
+
+        <tbody>
+
+          <!-- Iterates through each item in data -->
+          {% for item in data %}
+            <tr>
+                <!-- Iterates through every key in the current item dictionary -->
+              {% for key in item.keys() %}
+
+                <!-- Create a <td> element with the value of that key in it -->
+              <td> {{item[key]}} </td> 
+              {% endfor %}
+
+                <!-- Create our edit/delete buttons -->
+                <td><a href="edit_competitions/{{item.competition_id}}" class="btn btn-edit">Edit</a></td>
+                <td><a href="delete_competitions/{{item.competition_id}}" class="btn btn-delete">Delete</a></td>
+
+              </tr> 
+          {% endfor %} 
+          {% endif %} 
+        </table>   
+      <p>&nbsp;</p>
+    </div>
+
+    <div id="insert">
+
+      <!-- form to INSERT new data into competition-->
+      <form id="insertCompetition" action="/competitions" method="post">
+          <legend><strong>Add Competition</strong></legend>
+          <fieldset>
+                      
+              <!-- Placeholder left empty since this is a new competition being added, required forces the user to add input for every form so as not to introduce incomplete data -->
+              <label for="make">Competition Name:</label>
+              <input type="text" class="form-control" id="competition_name" name="competition_name" pattern="[A-Za-z0-9\s]{1,}" placeholder="" required>
+
+              <label for="model">Location:</label>
+              <input type="text" class="form-control" id="competition_location" name="competition_location" pattern="[A-Za-z0-9\s]{1,}" placeholder="" required>
+
+              <label for="year">Date:</label>
+              <input type="date" class="form-control" id="competition_date" name="competition_date" placeholder="" required>
+              <!-- these are hard coded, but you can add code to make this dynamic -->
+
+          </fieldset>
+
+                <!-- Create 'Add Competition' and 'Cancel' buttons -->
+          <input type="submit" value="Add Competition" name="Add_Competition" class="btn btn-primary" style="margin:.5rem;">
+          <input class="btn" type="button" value="Cancel" onClick="browseCompetitions()"> 
+      </form>
+    </div>
+    
+  </body>
+</html>

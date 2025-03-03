@@ -1,0 +1,135 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Based on:
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/edit_people.j2
+Used the started code and adapted it based on our project
+#}
+
+<html>
+
+<!-- Adapted from the edit_people.html UI design -->
+<head>
+	<h1>Edit Results</h1>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div>
+        <table border="1" cellpadding="5"> 
+            <caption> Editing Result: </caption>
+
+            <!-- Access data tuple passed from app.py -->
+            {% if data %}
+                <thead>
+                    <tr>
+                        <th>Result ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Competition</th>
+                        <th>Round Number</th>
+                        <th>Heat Number</th>
+                        <th>Result Type</th>
+                        <th>Placement</th>
+                    </tr>
+
+                <tbody>
+                    <!-- Iterates through the items in data -->
+                    {% for item in data %}
+                    <tr>
+                        <!-- Iterates through every key in the current item dictionary -->
+                        {% for key in item.keys() %}
+                        
+                        <!-- Creates a table data from each item's key -->
+                        <td>{{item[key]}}</td> {% endfor %} 
+                    </tr> 
+                    {% endfor %} 
+            {% endif %} 
+        </table>
+
+    <div id="edit">
+
+        <!-- form to edit data in Results-->
+        <form id="editResult" action="/edit_results/{{data[0].result_id}}" method="post">
+            <legend><strong>Edit Result</strong></legend>
+            <fieldset>
+
+                <!-- Creates hidden form input to store the passed 'result_id' to be used in POST request to update the specific row tied to this result from app.py -->
+                <input type="hidden" value="{{data[0].result_id}}" class="form-control" id="result_id" name="result_id" required>
+
+                <label for="make">Surfer:</label>
+                <select class="form-control" id="surfer_id" name="surfer_id" required>
+                    {% for surfer in surfers %}
+                        {% if data[0].first_name == surfer['first_name'] and  data[0].last_name == surfer['last_name']%}
+                            <option value="{{surfer['surfer_id']}}" selected>{{surfer['first_name']}} {{surfer['last_name']}}</option>
+                        {% else %}
+                            <option value="{{surfer['surfer_id']}}">{{surfer['first_name']}} {{surfer['last_name']}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+                
+                <label for="model">Competition:</label>
+                <select class="form-control" id="competition_id" name="competition_id" required>
+                    {% for competition in competitions %}
+                        {% if data[0].competition_name == competition['competition_name'] %}
+                            <option value="{{competition['competition_id']}}" selected>{{competition['competition_name']}}</option>
+                        {% else %}
+                            <option value="{{competition['competition_id']}}">{{competition['competition_name']}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+
+                <label for="year">Round:</label>
+                <select class="form-control" id="round_id" name="round_id">
+                    <option value="">N/A</option>
+                    {% for round in rounds %}
+                        {%if data[0].round_type == round['round_type'] %}
+                            <option value="{{round['round_id']}}" selected>{{round['competition_name']}} - {{round['round_type']}}</option>
+                        {% else %}
+                            <option value="{{round['round_id']}}">{{round['competition_name']}} - {{round['round_type']}}</option>
+                        {%endif%}
+                    {% endfor %}
+                </select>
+
+                <label for="color">Heat:</label>
+                <select class="form-control" id="heat_id" name="heat_id">
+                    <option value="" selected>N/A</option>
+                    {% for heat in heats %}
+                        {% if data[0].heat_number == heat['heat_number'] %}
+                            <option value="{{heat['heat_id']}}" selected>{{heat['competition_name']}} - {{heat['round_type']}} - {{heat['heat_number']}}</option>
+                        {% else %}
+                            <option value="{{heat['heat_id']}}">{{heat['competition_name']}} - {{heat['round_type']}} - {{heat['heat_number']}}</option>
+                        {% endif %} 
+                    {% endfor %}
+                </select>
+            
+                <label for="color">Result Type:</label>
+                <select class="form-control" id="result_type" name="result_type"  value="Select a Value" required>
+                    {%if data[0].result_type == "Competition" %}
+                        <option value="Competition"selected>Competition</option>
+                        <option value="Round">Round</option>
+                        <option value="Heat">Heat</option>
+                    {% elif data[0].result_type == "Round" %}
+                        <option value="Competition">Competition</option>
+                        <option value="Round"selected>Round</option>
+                        <option value="Heat">Heat</option>
+                    {% else %}
+                        <option value="Competition">Competition</option>
+                        <option value="Round">Round</option>
+                        <option value="Heat" selected>Heat</option>
+                    {% endif %}
+                    <option value="Heat">Heat</option>
+                </select>
+                        
+                <label for="color">Placement:</label>
+                <input type="text" class="form-control" id="placement" name="placement" pattern="[0-9]" value="{{data[0].placement}}">
+            
+            </fieldset>
+
+            <!-- Submits POST request to app.py-->
+            <input type="submit" value="Save" name="Edit_Result" class="btn btn-primary" style="margin:.5rem;">
+            
+            <!-- If update to result is cancelled, signals to reroute to results page-->
+            <a href='/results'><input class="btn" type="button" value="Cancel"></a>
+        </form>
+</html>

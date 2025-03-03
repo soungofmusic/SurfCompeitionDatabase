@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave of the Day</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <style></style>
+    <script src=""></script>
+</head>
+<body>
+    <header>
+        <h1>Wave of the Day</h1>
+        <h3>Surfing Competition Information and Rankings</h3>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="/" class="nav-link active">Home</a></li>
+            <li><a href="surfers" class="nav-link">Surfers</a></li>
+            <li><a href="/competitions" class="nav-link">Competitions</a></li>
+            <li><a href="/rounds" class="nav-link">Rounds</a></li>
+            <li><a href="/heats" class="nav-link">Heats</a></li>
+            <li><a href="/heat-scores" class="nav-link">Heat Scores</a></li>
+            <li><a href="/results" class="nav-link">Results</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        
+            <h2>About</h2>
+            <h3>The World Surf League (WSL) has just started to formalize a circuit of competitions to determine not only who is the best surfer at a specific competition, but how each surfer is ranked overall in the world. To date, there has been no attempt to determine the world's best surfer. As such, there is currently no centralized site to see rankings and scores for competitions held worldwide. The eventual goal is to be able to surface this information to the estimated 20 - 35 Million Surfers across the globe.</h3>
+        
+
+            <section>
+              <h2>Pages</h2>
+              <ul>
+                <li>
+                  <a href="/surfers">Surfers</a>
+                  <p>Table to displays all Surfers in the Database</p>
+                </li>
+                <li>
+                  <a href="/competitions">Competitions</a>
+                  <p>Table displays all competitions in the database</p>
+                </li>
+                <li>
+                  <a href="/rounds">Rounds</a>
+                  <p>Table displays all rounds in the database</p>
+                </li>
+                <li>
+                  <a href="/heats">Heats</a>
+                  <p>Table displays all heats in the database</p>
+                </li>
+                <li>
+                  <a href="/heat-scores">Heat Scores</a>
+                  <p>Table displays all heat scores in the database. Intersection table to resolve many:many relationship between Surfers and Heats.</p>
+                </li>
+                <li>
+                  <a href="/results">Results</a>
+                  <p>Table displays all placements in the database for each competition, round, and heat. Intersection table to resolve many:many relationship between Surfers, Competitions, Rounds, Heats. </p>
+                </li>
+              </ul>
+            </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Wave of the Day. Alan & Spencer All rights reserved </p>
+    </footer>
+</body>
+</html>

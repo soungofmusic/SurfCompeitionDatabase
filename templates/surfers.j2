@@ -1,0 +1,163 @@
+{#
+Citation for the following code:
+Date: 5/21/2024
+Adapted from 
+Adapted the UI and structure from the starter code
+Source URL: https://github.com/osu-cs340-ecampus/flask-starter-app/blob/master/bsg_people_app/templates/people.j2
+#}
+
+<html>
+
+<!-- Adapted from the people.html UI design -->
+  <head>
+    <title>Surfers</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <script language="JavaScript">
+      function showform(dowhat) {
+        /*
+        * Divs will allow for hiding forms depending on what action is taken by the user when used with functions below
+        */
+        if (dowhat == 'insert') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'block';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'none';
+        } else if (dowhat == 'edit') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'block';
+          document.getElementById('delete').style.display = 'none';
+        } else if (dowhat == 'delete') {
+          document.getElementById('browse').style.display = 'none';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'block';
+        } else if (dowhat == 'all') {
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'block';
+          document.getElementById('edit').style.display = 'block';
+          document.getElementById('delete').style.display = 'block';
+        } else { //by default display browse
+          document.getElementById('browse').style.display = 'block';
+          document.getElementById('insert').style.display = 'none';
+          document.getElementById('edit').style.display = 'none';
+          document.getElementById('delete').style.display = 'none';
+        }
+      }
+
+      function newSurfer() {
+        showform('insert');
+      }
+
+      function editSurfer(sid) {
+        showform('edit');
+      }
+
+      function deleteSurfer(surfer_id) {
+        showform('delete');
+      }
+
+      function browseSurfers() {
+        showform('browse');
+      }
+
+      function showAll() {
+        showform('all');
+      }
+    </script>
+  </head>
+
+  <body onload="browseSurfers()">
+    <h1>Surfers</h1> 
+    <nav>
+  <ul>
+    <li><a href="/" class="nav-link">Home</a></li>
+    <li><a href="surfers" class="nav-link active">Surfers</a></li>
+    <li><a href="/competitions" class="nav-link">Competitions</a></li>
+    <li><a href="/rounds" class="nav-link">Rounds</a></li>
+    <li><a href="/heats" class="nav-link">Heats</a></li>
+    <li><a href="/heat-scores" class="nav-link">Heat Scores</a></li>
+    <li><a href="/results" class="nav-link">Results</a></li>
+  </ul>
+</nav>
+
+    <h4>The Surfers page provides a comprehensive overview of all the surfers registered in the database. It offers a user-friendly interface to manage surfer information efficiently. The page supports full CRUD (Create, Read, Update, Delete) functionality, allowing users to seamlessly add new surfers, view existing surfer details, update surfer information, and remove surfers from the database when necessary. </h4>
+
+
+    <!-- Enables browse function above and hides other forms -->
+    <div id="browse">
+
+      <!-- Adds New Surfer Button-->
+      <p><a href="#" class="btn btn-primary" onClick="newSurfer()">Add New Surfer</a> </p>
+
+      <!-- Builds table with all surfers-->
+      <table border="1" cellpadding="5">
+
+            <!-- Access data tuple passed from app.py --> 
+            {% if data %}
+          
+          <thead>
+            <tr>
+              <th>Surfer ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Home Country</th>
+              <th>Age</th>
+              <th>World Rank</th>
+            </tr>
+
+        <tbody>
+
+          <!-- Iterates through each item in data -->
+          {% for item in data %}
+            <tr>
+                <!-- Iterates through every key in the current item dictionary -->
+              {% for key in item.keys() %}
+
+                <!-- Create a <td> element with the value of that key in it -->
+              <td> {{item[key]}} </td> 
+              {% endfor %}
+
+                <!-- Create our edit/delete buttons -->
+                <td><a href="edit_surfers/{{item.surfer_id}}" class="btn btn-edit">Edit</a></td>
+                <td><a href="delete_surfers/{{item.surfer_id}}" class="btn btn-delete">Delete</a></td>
+
+              </tr> 
+          {% endfor %} 
+          {% endif %} 
+        </table>   
+      <p>&nbsp;</p>
+    </div>
+
+    <div id="insert">
+
+      <!-- form to INSERT new data into surfer-->
+      <form id="insertSurfer" action="/surfers" method="post">
+          <legend><strong>Add Surfer</strong></legend>
+          <fieldset>
+                      
+              <!-- Placeholder left empty since this is a new surfer being added, required forces the user to add input for every form so as not to introduce incomplete data -->
+              <label for="make">First Name:</label>
+              <input type="text" class="form-control" id="first_name" name="first_name" pattern="[A-Za-z0-9\s]{1,}" placeholder="" required>
+
+              <label for="model">Last Name:</label>
+              <input type="text" class="form-control" id="last_name" name="last_name" pattern="[A-Za-z0-9\s]{1,}" placeholder="" required>
+
+              <label for="year">Country of Origin:</label>
+              <input type="text" class="form-control" id="origin_country" name="origin_country" pattern="[A-Za-z\s]{1,}" placeholder="" required>
+              <!-- these are hard coded, but you can add code to make this dynamic -->
+
+              <label for="color">Age:</label>
+              <input type="text" class="form-control" id="age" name="age" pattern="[A-Za-z0-9]{1,}" placeholder="" required>
+
+              <label for="color">World Rank:</label>
+              <input type="text" class="form-control" id="world_rank" name="world_rank" pattern="[A-Za-z0-9]{1,}" placeholder="" required> 
+          </fieldset>
+
+                <!-- Create 'Add Surfer' and 'Cancel' buttons -->
+          <input type="submit" value="Add Surfer" name="Add_Surfer" class="btn btn-primary" style="margin:.5rem;">
+          <input class="btn" type="button" value="Cancel" onClick="browseSurfers()"> 
+      </form>
+    </div>
+  </body>
+</html>
