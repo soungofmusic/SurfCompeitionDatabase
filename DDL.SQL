@@ -92,52 +92,209 @@ VALUES
 ("Rip Curl Pro","Bells Beach","2024-3-10"),
 ("Western Australia Margaret River Pro","Margaret River","2024-3-15");
 
-INSERT INTO Rounds (competition_id,round_type) 
-VALUES 
-(1,"Knockout"),
-(1,"Quarter-Final"),
-(1,"Semi-Final"),
-(1,"Final"),
-(2,"Knockout"),
-(2,"Quarter-Final"),
-(2,"Semi-Final"),
-(2,"Final"),
-(3,"Knockout"),
-(3,"Quarter-Final"),
-(3,"Semi-Final"),
-(3,"Final"),
-(4,"Knockout"),
-(4,"Quarter-Final"),
-(4,"Semi-Final"),
-(4,"Final"),
-(5,"Knockout"),
-(5,"Quarter-Final"),
-(5,"Semi-Final"),
-(5,"Final");
+-- Using SELECT subqueries for Rounds table insertions
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Knockout"
+FROM Competitions
+WHERE competition_name = "Lexus Pipe Pro";
 
-INSERT INTO Heats (round_id,heat_number) 
-VALUES 
-(1,1),
-(2,1),
-(2,3),
-(2,4),
-(3,5);
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Quarter-Final"
+FROM Competitions
+WHERE competition_name = "Lexus Pipe Pro";
 
-INSERT INTO Heat_Scores (surfer_id,heat_id,score_num) 
-VALUES 
-(1,1,19.95),
-(2,1,18),
-(3,1,15.22),
-(4,2,16.25),
-(5,2,12.11);
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Semi-Final"
+FROM Competitions
+WHERE competition_name = "Lexus Pipe Pro";
 
-INSERT INTO Results (surfer_id,competition_id,round_id,heat_id,result_type,placement) 
-VALUES 
-(1,1,NULL,NULL,"Competition",1),
-(1,1,2,NULL,"Round",1),
-(2,2,2,1,"Heat",2),
-(3,4,NULL,NULL,"Competition",1),
-(4,3,1,NULL,"Round",2);
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Final"
+FROM Competitions
+WHERE competition_name = "Lexus Pipe Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Knockout"
+FROM Competitions
+WHERE competition_name = "Hurley Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Quarter-Final"
+FROM Competitions
+WHERE competition_name = "Hurley Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Semi-Final"
+FROM Competitions
+WHERE competition_name = "Hurley Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Final"
+FROM Competitions
+WHERE competition_name = "Hurley Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Knockout"
+FROM Competitions
+WHERE competition_name = "MEO Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Quarter-Final"
+FROM Competitions
+WHERE competition_name = "MEO Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Semi-Final"
+FROM Competitions
+WHERE competition_name = "MEO Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Final"
+FROM Competitions
+WHERE competition_name = "MEO Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Knockout"
+FROM Competitions
+WHERE competition_name = "Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Quarter-Final"
+FROM Competitions
+WHERE competition_name = "Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Semi-Final"
+FROM Competitions
+WHERE competition_name = "Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Final"
+FROM Competitions
+WHERE competition_name = "Rip Curl Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Knockout"
+FROM Competitions
+WHERE competition_name = "Western Australia Margaret River Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Quarter-Final"
+FROM Competitions
+WHERE competition_name = "Western Australia Margaret River Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Semi-Final"
+FROM Competitions
+WHERE competition_name = "Western Australia Margaret River Pro";
+
+INSERT INTO Rounds (competition_id, round_type)
+SELECT competition_id, "Final"
+FROM Competitions
+WHERE competition_name = "Western Australia Margaret River Pro";
+
+-- Using SELECT subqueries for Heats table insertions
+INSERT INTO Heats (round_id, heat_number)
+SELECT round_id, 1
+FROM Rounds
+WHERE round_type = "Knockout" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro");
+
+INSERT INTO Heats (round_id, heat_number)
+SELECT round_id, 1
+FROM Rounds
+WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro");
+
+INSERT INTO Heats (round_id, heat_number)
+SELECT round_id, 3
+FROM Rounds
+WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro");
+
+INSERT INTO Heats (round_id, heat_number)
+SELECT round_id, 4
+FROM Rounds
+WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro");
+
+INSERT INTO Heats (round_id, heat_number)
+SELECT round_id, 5
+FROM Rounds
+WHERE round_type = "Semi-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro");
+
+-- Using SELECT subqueries for Heat_Scores table insertions
+INSERT INTO Heat_Scores (surfer_id, heat_id, score_num)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Griffin" AND last_name = "Colapinto"),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Knockout" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    19.95;
+
+INSERT INTO Heat_Scores (surfer_id, heat_id, score_num)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Jack" AND last_name = "Robinson"),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Knockout" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    18.00;
+
+INSERT INTO Heat_Scores (surfer_id, heat_id, score_num)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "John John" AND last_name = "Florence"),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Knockout" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    15.22;
+
+INSERT INTO Heat_Scores (surfer_id, heat_id, score_num)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Ethan" AND last_name = "Ewing"),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    16.25;
+
+INSERT INTO Heat_Scores (surfer_id, heat_id, score_num)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Jordy" AND last_name = "Smith"),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    12.11;
+
+-- Using SELECT subqueries for Results table insertions
+INSERT INTO Results (surfer_id, competition_id, round_id, heat_id, result_type, placement)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Griffin" AND last_name = "Colapinto"),
+    (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"),
+    NULL,
+    NULL,
+    "Competition",
+    1;
+
+INSERT INTO Results (surfer_id, competition_id, round_id, heat_id, result_type, placement)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Griffin" AND last_name = "Colapinto"),
+    (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"),
+    (SELECT round_id FROM Rounds WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro")),
+    NULL,
+    "Round",
+    1;
+
+INSERT INTO Results (surfer_id, competition_id, round_id, heat_id, result_type, placement)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Jack" AND last_name = "Robinson"),
+    (SELECT competition_id FROM Competitions WHERE competition_name = "Hurley Pro"),
+    (SELECT round_id FROM Rounds WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Hurley Pro")),
+    (SELECT heat_id FROM Heats WHERE heat_number = 1 AND round_id = (SELECT round_id FROM Rounds WHERE round_type = "Quarter-Final" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "Lexus Pipe Pro"))),
+    "Heat",
+    2;
+
+INSERT INTO Results (surfer_id, competition_id, round_id, heat_id, result_type, placement)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "John John" AND last_name = "Florence"),
+    (SELECT competition_id FROM Competitions WHERE competition_name = "Rip Curl Pro"),
+    NULL,
+    NULL,
+    "Competition",
+    1;
+
+INSERT INTO Results (surfer_id, competition_id, round_id, heat_id, result_type, placement)
+SELECT 
+    (SELECT surfer_id FROM Surfers WHERE first_name = "Ethan" AND last_name = "Ewing"),
+    (SELECT competition_id FROM Competitions WHERE competition_name = "MEO Rip Curl Pro"),
+    (SELECT round_id FROM Rounds WHERE round_type = "Knockout" AND competition_id = (SELECT competition_id FROM Competitions WHERE competition_name = "MEO Rip Curl Pro")),
+    NULL,
+    "Round",
+    2;
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;
