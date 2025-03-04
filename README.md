@@ -20,6 +20,7 @@ A comprehensive database application for managing professional surf competitions
 The Surf Competition Database is designed to organize and track professional surfing events. It manages surfer profiles, competition details, rounds, heats, and scoring, providing a comprehensive system for competition organizers and surf enthusiasts.
 
 ![Dashboard Overview](/assets/dashboard.png)
+
 *Dashboard showing active competitions and top-ranked surfers*
 
 ## ✨ Features
@@ -60,7 +61,7 @@ The Surf Competition Database is designed to organize and track professional sur
 
 The database is built around six main tables that organize the competitive surfing ecosystem:
 
-![Surf Competition Database ERD](/assets/surf_competition_erd.png)
+![Surf Competition Database ERD](/assets/surf_competition_erd.jpg)
 *Entity Relationship Diagram showing table relationships*
 
 ### Tables Overview
