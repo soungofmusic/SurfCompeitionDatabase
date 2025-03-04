@@ -14,7 +14,6 @@ A comprehensive database application for managing professional surf competitions
 - [Sample Data & Outputs](#sample-data--outputs)
 - [Project Structure](#project-structure)
 - [Setup Instructions](#setup-instructions)
-- [Demo](#demo)
 
 ## 🌊 Overview
 
@@ -38,8 +37,8 @@ The Surf Competition Database is designed to organize and track professional sur
 - Organize competitions into rounds (Knockout, Quarter-Final, Semi-Final, Final)
 - Set up heats within each round for surfer matchups
 
-![Competition Management](/assets/competition-management.gif)
-*Adding a new competition and setting up rounds*
+![Competition Management](/assets/competition-management.png)
+*Competition management interface showing rounds and heats*
 
 ### Scoring System
 - Record individual wave scores for surfers in each heat
@@ -224,10 +223,6 @@ ORDER BY hs.score_num DESC;
 
 7. Access the application
    - Open your browser and navigate to http://localhost:5000
-
-## 🎬 Demo
-
-[Watch the application demo on YouTube](https://youtu.be/your-video-id)
 
 ## 📄 License
 This project is licensed under the MIT License - see the LICENSE file for details.
